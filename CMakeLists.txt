@@ -48,7 +48,7 @@ add_executable(${EXEC} ${EXEC_SOURCES})
 install_targets(${CMAKE_INSTALL_PREFIX} ${EXEC})
 
 # Add the path to our local libraries
-set(LIBRARY_SEARCH_PATHS "lib/${CLICK_ARCH}/")
+set(LIBRARY_SEARCH_PATHS "lib/arm-linux-gnueabihf/")
 
 # Find libSDL2 (system-wide or local installation)
 find_library(SDL2_LIB NAMES SDL2 PATHS ${LIBRARY_SEARCH_PATHS})
@@ -73,24 +73,7 @@ set(
     EXEC_LIBS
     ${XSS_LIB}
     ${SDL2_LIB}
-#    ${ASOUND_LIB}
-#    ${PULSE_LIB}
-#    ${PULSE_LIB_SIMPLE}
-#    X11
-#    Xext
-#    Xxf86vm
-#    ${XCURSOR_LIB}
-#    ${XINERAMA_LIB}
-#    ${XKBCOMMON_LIB}
-#    ${XI_LIB}
-#    ${XRANDR_LIB}
-#    wayland-client
-#    wayland-cursor
-#    wayland-egl
-#    dl
-#    m
-#    pthread)
-)
+    )
 
 # Link against libSDL2
 target_link_libraries(${EXEC} ${EXEC_LIBS})
@@ -101,14 +84,11 @@ add_subdirectory(include)
 # Include dynamic libraries
 add_subdirectory(lib)
 
-# Include other binaries
-add_subdirectory(bin)
-
 add_custom_target("check" ${EXEC}
                     DEPENDS ${EXEC}
                     WORKING_DIRECTORY .)
 
-add_custom_target("run" bin/run.sh
+add_custom_target("run" ${EXEC}
                     DEPENDS ${EXEC}
                     WORKING_DIRECTORY .)
 
